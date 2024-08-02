@@ -9,7 +9,7 @@ export const createQuestion = async (
 ) => {
     // 제목을 2글자 이상, 내용은 3글자 이상이고 userIdx가 존재하는지 확인
     try {
-        if (!req.body.title || !req.body.content || !req.body.user) {
+        if (!req.body.title || !req.body.content || !req.body.userIdx) {
             return res.status(400).json({
                 message: '제목, 내용, 사용자 정보가 필요합니다.',
             })
@@ -22,7 +22,7 @@ export const createQuestion = async (
             data: {
                 title: req.body.title,
                 content: req.body.content,
-                userIdx: req.body.user,
+                userIdx: req.body.userIdx,
             },
         })
         return res

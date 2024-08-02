@@ -40,6 +40,7 @@ export const deleteUser = async (userIdx: number, res: NextApiResponse) => {
                 idx: userIdx,
             },
         })
+        return res.status(200).json({ status: '사용자 삭제에 성공했습니다.' })
     } catch (error) {
         console.error('사용자 삭제 중 오류 발생:', error)
         return res.status(500).json({ message: '서버 오류가 발생했습니다.' })
