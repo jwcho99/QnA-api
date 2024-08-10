@@ -4,6 +4,32 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const prisma = new PrismaClient()
 
+/**
+ * @swagger
+ * /api/user:
+ *   post:
+ *     description: 회원가입
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: 사용자 이메일 주소
+ *               password:
+ *                 type: string
+ *                 description: 사용자 비밀번호 (최소 6자)
+ *     responses:
+ *       200:
+ *         description: 회원가입 완료!
+ *       400:
+ *         description: 회원가입 에러
+ */
+
 export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     const { nickname, password } = req.body
     if (!nickname || !password) {

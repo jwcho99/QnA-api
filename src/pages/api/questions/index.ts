@@ -2,8 +2,14 @@ import { create } from 'domain'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createQuestion } from '@/apis/questions/createQuestion'
 import { getQuestion } from '@/apis/questions/getQuestion'
+import { verify } from 'jsonwebtoken'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+    try {
+        verify(req.headers.cookie!, process.env.JWT_SECRET as string)
+    } catch (error) {
+        return res.status(401).json({ message: '유효하지 않은 token입니다.' })
+    }
     try {
         if (req.method === 'POST') {
             // createQuestion 필수 : useridx, title>=2, content>=3

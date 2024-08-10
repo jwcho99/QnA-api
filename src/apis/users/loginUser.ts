@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 import { compare } from 'bcrypt'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { withSwagger } from 'next-swagger-doc'
+import { sign, verify } from 'jsonwebtoken'
 
 const prisma = new PrismaClient()
 
@@ -28,5 +30,15 @@ export const loginUser = async (req: NextApiRequest, res: NextApiResponse) => {
             .status(400)
             .json({ message: '비밀번호가 일치하지 않습니다.' })
     }
-    res.status(200).json({ status: 'success' })
+
+    const payload = {
+        nickname: user.nickname,
+        idx: user.idx,
+        createAt: user.createdAt,
+        updateAt: user.updatedAt,
+    }
+    const token = await sign(payload, process.env.JWT_SECRET as string, {
+        expiresIn: '1h',
+    })
+    res.status(200).json({ status: 'success', token })
 }

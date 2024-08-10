@@ -1,6 +1,7 @@
 import { create } from 'domain'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createUser } from '@/apis/users/createUser'
+import { verify } from 'jsonwebtoken'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
